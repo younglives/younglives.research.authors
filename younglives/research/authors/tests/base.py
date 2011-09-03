@@ -23,11 +23,11 @@ class TestCase(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
-        self.applyProfile(portal, 'younglives.research.types:default')
+        self.applyProfile(portal, 'younglives.research.authors:default')
 
     def tearDownZope(self, app):
         # Uninstall product
-        z2.uninstallProduct(app, 'younglives.research.types')
+        z2.uninstallProduct(app, 'younglives.research.authors')
 
         # Note: Again, you can skip this if my.product is not a Zope 2-
         # style product
