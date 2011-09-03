@@ -8,8 +8,6 @@ setup(name='younglives.research.authors',
       description="",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
-      # Get more strings from
-      # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
@@ -27,10 +25,14 @@ setup(name='younglives.research.authors',
           'setuptools',
           # -*- Extra requirements: -*-
       ],
+      extras_require = {
+          'test': [
+              'plone.app.testing',
+          ]
+      },
       entry_points="""
       # -*- Entry points: -*-
-
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      )
+)
