@@ -45,4 +45,8 @@ AuthorSchema = ATContentTypeSchema.copy() + Schema((
 
 ))
 
+AuthorSchema['title'].required = 0
+AuthorSchema['title'].widget.visible = 0
+AuthorSchema['description'].widget.visible = 0
+
 finalizeATCTSchema(AuthorSchema)

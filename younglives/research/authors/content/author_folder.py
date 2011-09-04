@@ -45,6 +45,7 @@ class AuthorFolder(ATFolder):
             results = portal_catalog(id=title)
             if results:
                 # author already exists
+                objects.append(results[0].getObject())
                 continue
             unique_id = self.generateUniqueId('Author')
             new_id = self.invokeFactory('Author', unique_id)
@@ -53,8 +54,17 @@ class AuthorFolder(ATFolder):
                 names = author.split(' ')
             except TypeError:
                 import pdb;pdb.set_trace()
-            object.setFamilyName(names[-1])
-            personal_names = ' '.join(names[:-1])
+            family_name = names[-1]
+            if family_name in VIETNAM_NAMES:
+                family_name = names[0]
+                personal_names = names[1:]
+                object.setNameOrder(True)
+            elif family_name == 'Boo':
+                family_name = 'Lopez Boo'
+                personal_names = ' '.join(names[:-2])
+            else:
+                personal_names = ' '.join(names[:-1])
+            object.setFamilyName(family_name)
             object.setPersonalNames(personal_names)
             object._renameAfterCreation()
             object.unmarkCreationFlag()

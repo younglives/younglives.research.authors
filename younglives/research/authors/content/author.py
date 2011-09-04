@@ -43,6 +43,11 @@ class Author(ATCTContent):
         """change the id based on referenceNumber"""
         self._renameAfterCreation()
 
+    security.declarePublic('Title')
+    def Title(self):
+        """Return the name as the title"""
+        return self.getName()
+
     security.declarePublic('canSetConstrainTypes')
     def getName(self):
         """Return the name in correct order"""
