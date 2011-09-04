@@ -2,10 +2,7 @@ from plone.app.folder.folder import ATFolderSchema
 
 from Products.Archetypes.atapi import BooleanField
 from Products.Archetypes.atapi import BooleanWidget
-from Products.Archetypes.atapi import LinesField
-from Products.Archetypes.atapi import MultiSelectionWidget
 from Products.Archetypes.atapi import Schema
-from Products.Archetypes.atapi import SelectionWidget
 from Products.Archetypes.atapi import StringField
 from Products.Archetypes.atapi import StringWidget
 
@@ -17,6 +14,33 @@ AuthorFolderSchema = ATFolderSchema.copy() + Schema((
 ))
 
 AuthorSchema = ATContentTypeSchema.copy() + Schema((
+
+    StringField('personalNames',
+        required = False,
+        searchable = False,
+        widget = StringWidget(
+            label='Personal Names',
+            format='checkbox',
+        )
+    ),
+
+    StringField('familyName',
+        required = False,
+        searchable = False,
+        widget = StringWidget(
+            label='Family Names',
+            format='checkbox',
+        )
+    ),
+
+    BooleanField('nameOrder',
+        required = False,
+        searchable = False,
+        widget = BooleanWidget(
+            label='Family Names',
+            format='checkbox',
+        )
+    ),
 
 ))
 
