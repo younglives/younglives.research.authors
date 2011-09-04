@@ -37,7 +37,8 @@ AuthorSchema = ATContentTypeSchema.copy() + Schema((
         required = False,
         searchable = False,
         widget = BooleanWidget(
-            label='Family Names',
+            label='Name order',
+            description='Tick this if the name order should be family name followed by personal names',
             format='checkbox',
         )
     ),
