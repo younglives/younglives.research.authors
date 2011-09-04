@@ -27,4 +27,27 @@ class Author(ATCTContent):
 
     schema = AuthorSchema
 
+    security.declarePrivate('_renameAfterCreation')
+    def _renameAfterCreation(self, check_auto_id=False):
+        plone_tool = getToolByName(self, 'plone_utils', None)
+        parent = self.aq_inner.aq_parent
+        newId = self.getName()
+        newId = plone_tool.normalizeString(newId)
+        #newId = newId.replace(' ', '_')
+        #newId = newId.lower()
+        transaction.savepoint(optimistic = True)
+        self.setId(newId)
+
+    security.declarePrivate('at_post_edit_script')
+    def at_post_edit_script(self):
+        """change the id based on referenceNumber"""
+        self._renameAfterCreation()
+
+    security.declarePublic('canSetConstrainTypes')
+    def getName(self):
+        """Return the name in correct order"""
+        name = self.getPersonalNames()
+        name = name + ' ' + self.getFamilyName()
+        return name
+
 registerType(Author, PROJECTNAME)
