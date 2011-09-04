@@ -40,9 +40,31 @@ class AuthorFolder(ATFolder):
         plone_tool = getToolByName(self, 'plone_utils', None)
         author_list = authors.split(',')
         for author in author_list:
+            alternative_order = False
             author = author.strip()
-            title = plone_tool.normalizeString(author)
-            results = portal_catalog(id=title)
+            names = author.split(' ')
+            first_name = names[0]
+            #if author == 'Truong Chi':
+            #    import pdb;pdb.et_trace()
+            if first_name in VIETNAM_NAMES:
+                alternative_order = True
+                family_name = names[0]
+                personal_names = ' '.join(names[1:])
+                full_name = family_name + ' ' + personal_names
+                full_name = plone_tool.normalizeString(full_name)
+                results = portal_catalog(id=full_name)
+            elif names[-1] == 'Boo':
+                family_name = 'Lopez Boo'
+                personal_names = ' '.join(names[:-2])
+                full_name = personal_names + ' ' + family_name
+                full_name = plone_tool.normalizeString(full_name)
+                results = portal_catalog(id=full_name)
+            else:
+                personal_names = ' '.join(names[:-1])
+                family_name = names[-1]
+                full_name = personal_names + ' ' + family_name
+                full_name = plone_tool.normalizeString(full_name)
+                results = portal_catalog(id=full_name)
             if results:
                 # author already exists
                 objects.append(results[0].getObject())
@@ -50,23 +72,15 @@ class AuthorFolder(ATFolder):
             unique_id = self.generateUniqueId('Author')
             new_id = self.invokeFactory('Author', unique_id)
             object = self[new_id]
-            try:
-                names = author.split(' ')
-            except TypeError:
-                import pdb;pdb.set_trace()
-            family_name = names[-1]
-            if family_name in VIETNAM_NAMES:
-                family_name = names[0]
-                personal_names = names[1:]
+            if alternative_order:
                 object.setNameOrder(True)
-            elif family_name == 'Boo':
-                family_name = 'Lopez Boo'
-                personal_names = ' '.join(names[:-2])
-            else:
-                personal_names = ' '.join(names[:-1])
             object.setFamilyName(family_name)
             object.setPersonalNames(personal_names)
-            object._renameAfterCreation()
+            try:
+                object._renameAfterCreation()
+            except:
+                import pdb;pdb.set_trace()
+                object._renameAfterCreation()
             object.unmarkCreationFlag()
             object.reindexObject()
             objects.append(object)

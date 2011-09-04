@@ -51,8 +51,10 @@ class Author(ATCTContent):
     security.declarePublic('canSetConstrainTypes')
     def getName(self):
         """Return the name in correct order"""
-        name = self.getPersonalNames()
-        name = name + ' ' + self.getFamilyName()
-        return name
+        personal_names = self.getPersonalNames()
+        family_name = self.getFamilyName()
+        if self.getNameOrder():
+            return family_name + ' ' + personal_names
+        return personal_names + ' ' + family_name
 
 registerType(Author, PROJECTNAME)
