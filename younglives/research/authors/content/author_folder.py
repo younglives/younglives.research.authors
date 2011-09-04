@@ -38,6 +38,7 @@ class AuthorFolder(ATFolder):
         objects = []
         portal_catalog = getToolByName(self, 'portal_catalog')
         plone_tool = getToolByName(self, 'plone_utils', None)
+        workflow_tool = getToolByName(self, 'portal_workflow', None)
         author_list = authors.split(',')
         for author in author_list:
             alternative_order = False
@@ -76,12 +77,9 @@ class AuthorFolder(ATFolder):
                 object.setNameOrder(True)
             object.setFamilyName(family_name)
             object.setPersonalNames(personal_names)
-            try:
-                object._renameAfterCreation()
-            except:
-                import pdb;pdb.set_trace()
-                object._renameAfterCreation()
+            object._renameAfterCreation()
             object.unmarkCreationFlag()
+            workflow_tool.doActionFor(object,'publish',comment='Published on initial import')
             object.reindexObject()
             objects.append(object)
         return objects
