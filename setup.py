@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = open(os.path.join("younglives", "research", "types", "version.txt")).read().strip()
+version = open(os.path.join("younglives", "research", "authors", "version.txt")).read().strip()
 
 setup(name='younglives.research.authors',
       version=version,
