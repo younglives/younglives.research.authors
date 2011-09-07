@@ -13,8 +13,8 @@ setup(name='younglives.research.authors',
         "Programming Language :: Python",
         ],
       keywords='',
-      author='',
-      author_email='',
+      author='Michael Davis',
+      author_email='m.r.davis@cranfield.ac.uk',
       url='http://svn.plone.org/svn/collective/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
@@ -23,7 +23,6 @@ setup(name='younglives.research.authors',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
       ],
       extras_require = {
           'test': [
