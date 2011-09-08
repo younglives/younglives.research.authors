@@ -28,7 +28,7 @@ AuthorSchema = ATContentTypeSchema.copy() + Schema((
         required = False,
         searchable = False,
         widget = StringWidget(
-            label='Family Names',
+            label='Family Name',
             format='checkbox',
         )
     ),
@@ -40,6 +40,14 @@ AuthorSchema = ATContentTypeSchema.copy() + Schema((
             label='Name order',
             description='Tick this if the name order should be family name followed by personal names',
             format='checkbox',
+        )
+    ),
+
+    StringField('emailAddress',
+        required = False,
+        searchable = False,
+        widget = StringWidget(
+            label='Email Address',
         )
     ),
 
