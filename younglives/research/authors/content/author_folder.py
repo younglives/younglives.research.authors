@@ -36,7 +36,6 @@ class AuthorFolder(ATFolder):
     def _createAuthors(self, authors):
         """Create the authors if they don't already exist"""
         objects = []
-        portal_catalog = getToolByName(self, 'portal_catalog')
         plone_tool = getToolByName(self, 'plone_utils', None)
         workflow_tool = getToolByName(self, 'portal_workflow', None)
         author_list = authors.split(',')
@@ -45,27 +44,25 @@ class AuthorFolder(ATFolder):
             author = author.strip()
             names = author.split(' ')
             first_name = names[0]
-            #if author == 'Truong Chi':
-            #    import pdb;pdb.et_trace()
             if first_name in VIETNAM_NAMES:
                 alternative_order = True
                 family_name = names[0]
                 personal_names = ' '.join(names[1:])
                 full_name = family_name + ' ' + personal_names
                 full_name = plone_tool.normalizeString(full_name)
-                results = portal_catalog(id=full_name)
+                results = self.getFolderContents({'id':'full_name'})
             elif names[-1] == 'Boo':
                 family_name = 'Lopez Boo'
                 personal_names = ' '.join(names[:-2])
                 full_name = personal_names + ' ' + family_name
                 full_name = plone_tool.normalizeString(full_name)
-                results = portal_catalog(id=full_name)
+                results = self.getFolderContents({'id':'full_name'})
             else:
                 personal_names = ' '.join(names[:-1])
                 family_name = names[-1]
                 full_name = personal_names + ' ' + family_name
                 full_name = plone_tool.normalizeString(full_name)
-                results = portal_catalog(id=full_name)
+                results = self.getFolderContents({'id':'full_name'})
             if results:
                 # author already exists
                 objects.append(results[0].getObject())
