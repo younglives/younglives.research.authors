@@ -50,19 +50,19 @@ class AuthorFolder(ATFolder):
                 personal_names = ' '.join(names[1:])
                 full_name = family_name + ' ' + personal_names
                 full_name = plone_tool.normalizeString(full_name)
-                results = self.getFolderContents({'id':'full_name'})
+                results = self.getFolderContents({'id':full_name})
             elif names[-1] == 'Boo':
                 family_name = 'Lopez Boo'
                 personal_names = ' '.join(names[:-2])
                 full_name = personal_names + ' ' + family_name
                 full_name = plone_tool.normalizeString(full_name)
-                results = self.getFolderContents({'id':'full_name'})
+                results = self.getFolderContents({'id':full_name})
             else:
                 personal_names = ' '.join(names[:-1])
                 family_name = names[-1]
                 full_name = personal_names + ' ' + family_name
                 full_name = plone_tool.normalizeString(full_name)
-                results = self.getFolderContents({'id':'full_name'})
+                results = self.getFolderContents({'id':full_name})
             if results:
                 # author already exists
                 objects.append(results[0].getObject())
