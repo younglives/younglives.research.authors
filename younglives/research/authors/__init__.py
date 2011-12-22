@@ -1,7 +1,7 @@
 from zope.i18nmessageid import MessageFactory
 
-from Products.Archetypes import atapi
-from Products.CMFCore import utils
+from Products.Archetypes.atapi import listTypes, process_types
+from Products.CMFCore.utils import ContentInit
 
 from younglives.research.authors import config
 
@@ -13,12 +13,12 @@ def initialize(context):
     from content.author import Author
     from content.author_folder import AuthorFolder
 
-    content_types, constructors, ftis = atapi.process_types(
-        atapi.listTypes(config.PROJECTNAME),
+    content_types, constructors, ftis = process_types(
+        listTypes(config.PROJECTNAME),
         config.PROJECTNAME)
 
     for atype, constructor in zip(content_types, constructors):
-        utils.ContentInit('%s: %s' % (config.PROJECTNAME, atype.portal_type),
+        ContentInit('%s: %s' % (config.PROJECTNAME, atype.portal_type),
             content_types=(atype, ),
             permission=config.ADD_PERMISSIONS[atype.portal_type],
             extra_constructors=(constructor,),
